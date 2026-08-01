@@ -89,6 +89,34 @@ public:
         vector<bool> visited(V, false);
         return pathHelper(src, dest, visited);
     }
+
+    bool bipartite(){ // O(V + E)
+        queue<int> q;
+        vector<bool> vis(V, false);
+        vector<int> color(V, -1);
+
+        q.push(0);
+        color[0] = 0;
+
+        while(q.size() >0 ){
+            int curr = q.front();
+            q.pop();
+            list<int> neighbors = l[curr];
+
+            for(int v : neighbors){
+                if(!vis[v]){
+                    vis[v] = true;
+                    color[v] = !color[curr];
+                    q.push(v);
+                }else{
+                    if(color[v] == color[curr]){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 };
 
 
@@ -105,21 +133,28 @@ int main()
 
 
     
-    Graph graph(7);
+    // Graph graph(7);
+    // graph.addEdge(0, 1);
+    // graph.addEdge(0, 2);
+    // graph.addEdge(1, 3);
+    // graph.addEdge(1, 4);
+    // graph.addEdge(2, 5);
+    // graph.addEdge(2, 6);
+
+    // // cout<<"Graph created successfully!"<<endl;
+    // // graph.dfs(0, vector<bool>(7, false));
+    
+
+    // cout<<"Graph created successfully!"<<endl;
+    // graph.hasPath(0, 5)
+    //     ? cout << "Path exists between 0 and 5" << endl
+    //     : cout << "No path exists between 0 and 5" << endl; 
+
+    Graph graph(4);
     graph.addEdge(0, 1);
     graph.addEdge(0, 2);
     graph.addEdge(1, 3);
-    graph.addEdge(1, 4);
-    graph.addEdge(2, 5);
-    graph.addEdge(2, 6);
-
-    // cout<<"Graph created successfully!"<<endl;
-    // graph.dfs(0, vector<bool>(7, false));
-    
-
-        cout<<"Graph created successfully!"<<endl;
-        graph.hasPath(0, 5)
-            ? cout << "Path exists between 0 and 5" << endl
-            : cout << "No path exists between 0 and 5" << endl; 
+    graph.addEdge(2, 3);
+    cout<< "Ghraph is bipartite :"<< graph.bipartite()<<endl;
     return 0;
 }

@@ -30,7 +30,10 @@ public:
         }
     }
 
-    bool undir
+    bool undirGraph(){
+        vector<bool> vis(V, false);
+        
+    }
 };
 int main(){
     // Create a graph with 4 vertices and add weighted edges
