@@ -31,8 +31,23 @@ public:
     }
 
     bool undirGraph(){
-        vector<bool> vis(V, false);
-        
+        for(int u = 0; u < V; u++){
+            for(auto edge : l[u]){
+                int v = edge.first;
+                int wt = edge.second;
+                bool found = false;
+                for(auto revEdge : l[v]){
+                    if(revEdge.first == u && revEdge.second == wt){
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 };
 int main(){
